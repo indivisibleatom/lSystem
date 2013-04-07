@@ -5,6 +5,7 @@ class IDrawable
 {
 public:
 	virtual void draw() const = 0;
+	virtual ~IDrawable() = 0 {}
 };
 
 #endif//_DRAWABLE_H_

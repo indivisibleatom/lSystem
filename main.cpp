@@ -8,11 +8,11 @@
 
 int main(int argc, char *argv[])
 {
-	std::unique_ptr<LSystem> pSystem = LSystemBuilder::buildLSystem("C:\\Development\\openSource\\lSystem\\lSystem\\lSystemDescription.txt");
-	LSystemController systemController(std::move(pSystem));
-
 	Renderer renderer(800,600,32);
 	renderer.init();
+
+	std::unique_ptr<LSystem> pSystem = LSystemBuilder::buildLSystem("C:\\Development\\openSource\\lSystem\\lSystem\\lSystemDescription.txt");
+	LSystemController systemController(std::move(pSystem), renderer);
 
 	systemController.onUpdate();
 
@@ -27,6 +27,9 @@ int main(int argc, char *argv[])
 					break;
 			}
 		}
+		systemController.onUpdate();
+		renderer.draw();
+		renderer.flip();
 	}
 	return 0;
 }

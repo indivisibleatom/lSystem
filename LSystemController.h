@@ -14,11 +14,11 @@ private:
 	std::unique_ptr<LSystem> m_pSystem;
 	std::unique_ptr<LSystemMeshCreator> m_pMeshCreator;
 	std::unique_ptr<Mesh> m_pMesh;
+	Renderer& m_renderer;
 
 public:
-	LSystemController(std::unique_ptr<LSystem> pSystem);
+	LSystemController(std::unique_ptr<LSystem> pSystem, Renderer& renderer);
 	void onUpdate();
-	void onDraw();
 };
 
 #endif//_LSYTEMDRAWER_H_

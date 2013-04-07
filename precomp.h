@@ -9,4 +9,6 @@
 #include "Points.h"
 #include "Matrices.h"
 
+#define PI 3.14159265359
+
 #endif//_PRECOMP_H_

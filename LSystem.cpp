@@ -66,6 +66,10 @@ void LSystem::applyRules()
 			{
 				newString.append(currentProduction->RHS());
 			}
+			else
+			{
+				newString.push_back(*currentChar);
+			}
 		}
 	}
 	m_currentString = newString;
