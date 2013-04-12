@@ -79,8 +79,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="LSystem.cpp" />
     <ClCompile Include="LSystemController.cpp" />
+    <ClCompile Include="LSystemGrowthForest.cpp" />
     <ClCompile Include="LSystemMeshCreator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
@@ -89,9 +91,11 @@
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="drawable.h" />
     <ClInclude Include="LSystem.h" />
     <ClInclude Include="LSystemController.h" />
+    <ClInclude Include="LSystemGrowthForest.h" />
     <ClInclude Include="LSystemMeshCreator.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="precomp.h" />

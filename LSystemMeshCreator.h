@@ -6,14 +6,13 @@
 
 class LSystemMeshCreator
 {
-private:
-	Turtle m_turtle; 
+/*private:
 	int createCylinderBase(Mesh& mesh, int cylResolution);
 	std::unique_ptr<Mesh> createCylinderBlock();
 
 public:
 	LSystemMeshCreator(){}
-	std::unique_ptr<std::vector<std::unique_ptr<Mesh>>> createMesh(const std::string& lSysString);
+	std::unique_ptr<std::vector<std::unique_ptr<Mesh>>> createMesh(const std::string& lSysString);*/
 };
 
 #endif//_LSYSTEMMESHCREATOR_H_

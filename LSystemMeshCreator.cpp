@@ -3,7 +3,7 @@
 #include "Mesh.h"
 #include "utils.h"
 
-std::unique_ptr<std::vector<std::unique_ptr<Mesh>>> LSystemMeshCreator::createMesh(const std::string& lSysString)
+/*std::unique_ptr<std::vector<std::unique_ptr<Mesh>>> LSystemMeshCreator::createMesh(const std::string& lSysString)
 {
 	m_turtle.reset();
 	float deltaAngle = 45*PI/180;
@@ -68,3 +68,4 @@ std::unique_ptr<Mesh> LSystemMeshCreator::createCylinderBlock()
 	m_turtle.translate(cylLength);
 	return pMesh;
 }
+*/

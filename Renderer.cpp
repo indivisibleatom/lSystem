@@ -4,7 +4,7 @@
 #include "Renderer.h"
 #include "Drawable.h"
 
-Renderer::Renderer(int screenX, int screenY, int bpp) : m_screenSize(screenX, screenY), m_bpp(bpp)
+Renderer::Renderer(int screenX, int screenY, int bpp) : m_screenSize(screenX, screenY), m_bpp(bpp), m_camera(Vector3(0,0,-100), Vector3(0,0,0), Vector3(0,1,0))
 {
 }
 
@@ -30,10 +30,19 @@ bool Renderer::draw()
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(60, 800/600, 1, 1000);
-	gluLookAt(0, 0, 100, 0, 0, -1, 0, 1, 0);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+	glMultMatrixf(m_camera.getMultMatrix());
+
+	//DEBUG
+	/*glColor3f(1,0,0);
+	glBegin(GL_QUADS);
+		glVertex3f(0,0,0);
+		glVertex3f(50,0,0);
+		glVertex3f(50,50,0);
+		glVertex3f(0,50,0);
+	glEnd();*/
 
 	for (std::list<std::unique_ptr<IDrawable>>::const_iterator drawable = m_drawableList.cbegin(); drawable != m_drawableList.cend(); drawable++)
 	{

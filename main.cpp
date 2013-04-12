@@ -15,7 +15,8 @@ int main(int argc, char *argv[])
 	LSystemController systemController(std::move(pSystem), renderer);
 
 	systemController.onUpdate();
-
+	
+	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 	while (true)
 	{
 		SDL_Event event;
@@ -25,9 +26,23 @@ int main(int argc, char *argv[])
 			{
 				case SDL_QUIT: return false;
 					break;
+				case SDL_KEYDOWN: SDL_keysym keysym = event.key.keysym;
+					if (keysym.sym == 'a')
+					{
+						renderer.getCamera().rotateX(PI/180);
+					}
+					else if (keysym.sym == 's')
+					{
+						renderer.getCamera().rotateY(PI/180);
+					}
+					else if (keysym.sym == 'q')
+					{
+						renderer.getCamera().rotateZ(PI/180);
+					}
+					break;
 			}
 		}
-		systemController.onUpdate();
+		//systemController.onUpdate();
 		renderer.draw();
 		renderer.flip();
 	}

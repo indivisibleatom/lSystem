@@ -2,6 +2,7 @@
 #define _RENDERER_H_
 
 #include <list>
+#include "Camera.h"
 
 class IDrawable;
 struct SDL_Surface;
@@ -13,6 +14,7 @@ private:
 	std::tuple<int, int> m_screenSize;
 	SDL_Surface* m_pScreen; //Owned by SDL??
 	std::list<std::unique_ptr<IDrawable>> m_drawableList;
+	Camera m_camera;
 
 public:
 	Renderer(int screenX, int screenY, int bpp);
@@ -20,6 +22,7 @@ public:
 	bool draw();
 	void flip();
 	void addDrawable(std::unique_ptr<IDrawable> m_pDrawable);
+	Camera& getCamera() throw() { return m_camera; }
     //void applyTransFormation(const Matrix4& matrix)
 };
 

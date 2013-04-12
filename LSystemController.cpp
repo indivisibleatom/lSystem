@@ -12,9 +12,9 @@ LSystemController::LSystemController(std::unique_ptr<LSystem> pSystem, Renderer&
 void LSystemController::onUpdate()
 {
 	m_pSystem->applyRules();
-	std::unique_ptr<std::vector<std::unique_ptr<Mesh>>> pMeshList = m_pMeshCreator->createMesh(m_pSystem->getCurrentValue());
-	for (std::vector<std::unique_ptr<Mesh>>::iterator mesh = pMeshList->begin(); mesh != pMeshList->end(); mesh++)
-	{
-		m_renderer.addDrawable(std::move(*mesh));
-	}
+	//std::unique_ptr<std::vector<std::unique_ptr<Mesh>>> pMeshList = m_pMeshCreator->createMesh(m_pSystem->getCurrentValue());
+	//for (std::vector<std::unique_ptr<Mesh>>::iterator mesh = pMeshList->begin(); mesh != pMeshList->end(); mesh++)
+	//{
+	//	m_renderer.addDrawable(std::move(*mesh));
+	//}
 }
