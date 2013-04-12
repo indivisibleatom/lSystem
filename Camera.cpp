@@ -17,26 +17,32 @@ Camera::Camera(const Vector3& position, const Vector3& center, const Vector3& up
 
 void Camera::rotateX(float angle) throw()
 {
+	float cosAngle = cos(angle);
+	float sinAngle = sin(angle);
 	Matrix4 multX(1, 0, 0, 0,
-				   0, cos(angle), -sin(angle), 0,
-				   0, sin(angle), cos(angle), 0,
+				   0, cosAngle, -sinAngle, 0,
+				   0, sinAngle, cosAngle, 0,
 				   0, 0, 0, 1);
 	m_state *= multX;
 }
 
 void Camera::rotateY(float angle) throw()
 {
-	Matrix4 multY(cos(angle), 0, sin(angle), 0,
+	float cosAngle = cos(angle);
+	float sinAngle = sin(angle);
+	Matrix4 multY(cosAngle, 0, sinAngle, 0,
 				   0, 1, 0, 0,
-				  -sin(angle), 0, cos(angle), 0,
+				  -sinAngle, 0, cosAngle, 0,
 				   0, 0, 0, 1);
 	m_state *= multY;
 }
 
 void Camera::rotateZ(float angle) throw()
 {
-	Matrix4 multZ(cos(angle), -sin(angle), 0, 0,
-				   sin(angle), cos(angle), 0, 0,
+	float cosAngle = cos(angle);
+	float sinAngle = sin(angle);
+	Matrix4 multZ(cosAngle, -sinAngle, 0, 0,
+				   sinAngle, cosAngle, 0, 0,
 				   0, 0, 1, 0,
 				   0, 0, 0, 1);
 	m_state *= multZ;
