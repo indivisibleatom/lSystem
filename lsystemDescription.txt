@@ -1,4 +1,6 @@
+numDerivations = 2
 Axiom
-A
+A(l:100,a:45)
 Productions
-A>+FA
+A(l,a)>F(l)[-F(0.5l)/(a)A(0.5l,0.5a)]F(l)[+F(0.5l)/(a)A(0.5l,0.5a)]&0.10
+A(l,a)>F(l)[-F(0.5l)/(a)A(0.5l,0.5a)]F(0.5l)&0.90

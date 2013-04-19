@@ -34,6 +34,10 @@ std::unique_ptr<IDrawable> LSystemInterpreter::interpret(const std::string& stri
 			break;
 		case '/': m_turtle.changeRoll(-angle);
 			break;
+		case '[': m_turtle.pushState();
+			break;
+		case ']': m_turtle.popState();
+			break;
 		default: break;
 		}
 	}

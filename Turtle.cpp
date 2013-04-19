@@ -9,12 +9,12 @@ void Turtle::reset()
 			    0,0,0,1);
 }
 
-void Turtle::translate(float amount)
+void Turtle::translate(float amount) throw()
 {
 	translate(amount, heading());
 }
 
-void Turtle::translate(float amount, const Vector3& direction)
+void Turtle::translate(float amount, const Vector3& direction) throw()
 {
 	Vector3 directionNormal = direction;
 	directionNormal.normalize();
@@ -27,7 +27,7 @@ void Turtle::translate(float amount, const Vector3& direction)
 	m_state *= translationMat;
 }
 
-void Turtle::changeHeading(float angle)
+void Turtle::changeHeading(float angle) throw()
 {
 	float cosAngle = cos(angle);
 	float sinAngle = sin(angle);
@@ -38,7 +38,7 @@ void Turtle::changeHeading(float angle)
 	m_state *= headingRot;
 }
 
-void Turtle::changePitch(float angle)
+void Turtle::changePitch(float angle) throw()
 {
 	float cosAngle = cos(angle);
 	float sinAngle = sin(angle);
@@ -49,7 +49,7 @@ void Turtle::changePitch(float angle)
 	m_state *= pitchRot;
 }
 
-void Turtle::changeRoll(float angle)
+void Turtle::changeRoll(float angle) throw()
 {
 	float cosAngle = cos(angle);
 	float sinAngle = sin(angle);

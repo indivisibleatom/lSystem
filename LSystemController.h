@@ -14,6 +14,7 @@ private:
 	std::unique_ptr<LSystemInterpreter> m_pInterpreter;
 	std::unique_ptr<Mesh> m_pMesh;
 	Renderer& m_renderer;
+	int m_updateNumber;
 
 public:
 	LSystemController(std::unique_ptr<LSystem> pSystem, Renderer& renderer);

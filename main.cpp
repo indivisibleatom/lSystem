@@ -13,8 +13,6 @@ int main(int argc, char *argv[])
 
 	std::unique_ptr<LSystem> pSystem = LSystemBuilder::buildLSystem("C:\\Development\\openSource\\lSystem\\lSystem\\lSystemDescription.txt");
 	LSystemController systemController(std::move(pSystem), renderer);
-
-	systemController.onUpdate();
 	
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 	while (true)
@@ -42,7 +40,7 @@ int main(int argc, char *argv[])
 					break;
 			}
 		}
-		//systemController.onUpdate();
+		systemController.onUpdate();
 		renderer.draw();
 		renderer.flip();
 	}
