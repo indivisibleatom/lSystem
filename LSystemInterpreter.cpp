@@ -1,6 +1,7 @@
 #include "precomp.h"
 #include "LSystemInterpreter.h"
 #include "LineDrawable.h"
+#include "Token.h"
 
 std::unique_ptr<IDrawable> LSystemInterpreter::interpret(const std::string& string)
 {
@@ -10,34 +11,78 @@ std::unique_ptr<IDrawable> LSystemInterpreter::interpret(const std::string& stri
 	std::unique_ptr<LineDrawable> pLineDrawable(new LineDrawable());
 	
 	m_turtle.reset();
-	for (std::string::const_iterator iterator = string.cbegin(); iterator != string.cend(); iterator++)
+	StringTokenizer tokenizer(string);
+	ExpandedToken currentToken;
+	while (tokenizer.getNextToken(currentToken))
 	{
-		switch (*iterator)
+		switch (currentToken.getChar())
 		{
 		case 'F': 
 			{
 				Point3Df initPosition = m_turtle.position();
-				m_turtle.translate(length);
+				float distance = 100;
+				currentToken.getParamValueForKey('l', distance);
+				m_turtle.translate(distance);
 				Point3Df finalPosition = m_turtle.position();
 				pLineDrawable->addPoints(initPosition, finalPosition);
 				break;
 			}
-		case '+': m_turtle.changeHeading(angle);
-			break;
-		case '-': m_turtle.changeHeading(-angle);
-			break;
-		case '&': m_turtle.changePitch(angle);
-			break;
-		case '^': m_turtle.changePitch(-angle);
-			break;
-		case '\\': m_turtle.changeRoll(angle);
-			break;
-		case '/': m_turtle.changeRoll(-angle);
-			break;
-		case '[': m_turtle.pushState();
-			break;
-		case ']': m_turtle.popState();
-			break;
+		case '+': 
+			{
+				float angle = 45;
+				currentToken.getParamValueForKey('a', angle);
+				m_turtle.changeHeading(angle);
+				break;
+			}
+		case '-': 			
+			{
+				float angle = 45;
+				currentToken.getParamValueForKey('a', angle);
+				m_turtle.changeHeading(-angle);
+				break;
+			}
+		case '&': 
+			{
+				float angle = 45;
+				currentToken.getParamValueForKey('a', angle);
+				m_turtle.changePitch(angle);
+				break;
+			}
+		case '^': 
+			{
+				float angle = 45;
+				currentToken.getParamValueForKey('a', angle);
+				m_turtle.changePitch(-angle);
+				break;
+			}
+		case '\\': 
+			{
+				float angle = 45;
+				currentToken.getParamValueForKey('a', angle);
+				m_turtle.changeRoll(angle);
+				break;
+			}
+		case '/': 
+			{
+				float angle = 45;
+				currentToken.getParamValueForKey('a', angle);
+				m_turtle.changeRoll(-angle);
+				break;
+			}
+		case '[': 
+			{
+				float angle = 45;
+				currentToken.getParamValueForKey('a', angle);
+				m_turtle.pushState();
+				break;
+			}
+		case ']': 
+			{
+				float angle = 45;
+				currentToken.getParamValueForKey('a', angle);
+				m_turtle.popState();
+				break;
+			}
 		default: break;
 		}
 	}

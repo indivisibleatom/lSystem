@@ -14,6 +14,7 @@ public:
 	void rotateX(float angle) throw();
 	void rotateY(float angle) throw();
 	void rotateZ(float angle) throw();
+	void zoom(float value) throw();
 	const Matrix4& getState() const throw() { return m_state; }
 	const float* getMultMatrix() const throw() {return m_state.getTranspose(); }
 };

@@ -1,38 +1,7 @@
 #ifndef _LSYSTEM_H_
 #define _LSYSTEM_H_
 
-#include <map>
-
-class Token
-{
-protected:
-	char m_alpha;
-	typedef std::map<char, float> TokenParams;
-	TokenParams m_params;
-
-public:
-	Token() {}
-	virtual ~Token() {}
-	virtual const char* createToken(const char* ptr);
-	char getChar() const throw() { return m_alpha; }
-	typedef TokenParams::iterator iterator;
-	typedef TokenParams::const_iterator const_iterator;
-	iterator paramBegin() { return m_params.begin(); }
-	iterator paramEnd() { return m_params.end(); }
-	const_iterator cParamBegin() const { return m_params.cbegin(); }
-	const_iterator cParamEnd() const { return m_params.cend(); }
-};
-
-class ExpandedToken : public Token
-{
-public:
-	ExpandedToken() {}
-	~ExpandedToken() {}
-	const char* createToken(const char* ptr) override;
-	void createToken(const ExpandedToken& currentToken, const Token& tokenToUse);
-	float getParamValueForKey(char key) const throw() { return m_params.find(key)->second; }
-	std::string getStringForToken() const throw();
-};
+#include "Token.h"
 
 class ProductionLHS
 {

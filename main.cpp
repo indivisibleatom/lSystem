@@ -37,6 +37,14 @@ int main(int argc, char *argv[])
 					{
 						renderer.getCamera().rotateZ(PI/180);
 					}
+					else if (keysym.sym == 'z')
+					{
+						renderer.getCamera().zoom(2);
+					}
+					else if (keysym.sym == 'x')
+					{
+						renderer.getCamera().zoom(-2);
+					}
 					break;
 			}
 		}

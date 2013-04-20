@@ -47,3 +47,12 @@ void Camera::rotateZ(float angle) throw()
 				   0, 0, 0, 1);
 	m_state *= multZ;
 }
+
+void Camera::zoom(float distance) throw()
+{
+		Matrix4 translateZ(1, 0, 0, 0,
+				           0, 1, 0, 0,
+				           0, 0, 1, distance,
+				           0, 0, 0, 1);
+		m_state *= translateZ;
+}
