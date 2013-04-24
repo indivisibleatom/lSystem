@@ -34,7 +34,7 @@ std::unique_ptr<IDrawable> LSystemInterpreter::interpret(const std::string& stri
 				m_turtle.changeHeading(angle);
 				break;
 			}
-		case '-': 			
+		case '-':
 			{
 				float angle = 45;
 				currentToken.getParamValueForKey('a', angle);

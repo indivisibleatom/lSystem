@@ -5,6 +5,7 @@
 #include "LSystem.h"
 #include "LSystemController.h"
 #include "Renderer.h"
+#include "Skybox.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,6 +14,7 @@ int main(int argc, char *argv[])
 
 	std::unique_ptr<LSystem> pSystem = LSystemBuilder::buildLSystem("C:\\Development\\openSource\\lSystem\\lSystem\\lSystemDescription.txt");
 	LSystemController systemController(std::move(pSystem), renderer);
+	//TODO msati3: Move this to a world class
 	
 	SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 	while (true)
