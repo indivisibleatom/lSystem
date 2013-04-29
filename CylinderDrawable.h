@@ -38,7 +38,7 @@ private:
 	GLuint m_texture;
 
 public:
-	CylinderDrawableList() {m_texture = createTexture("C:\\Users\\msati3\\Desktop\\lSystem\\lSystem\\Debug\\bark.bmp");}
+	CylinderDrawableList() {m_texture = createTexture("C:\\Development\\openSource\\lSystem\\lSystem\\Debug\\bark.bmp");}
 	void onNewInterpretationStart() throw() { m_cylinderDrawableList.clear(); m_leavesDrawableList.clear(); }
 	void addCylinder(const Matrix4& orientation, const Point3Df& position, float length, float widthTop, float widthBase) { m_cylinderDrawableList.push_back(CylinderDrawable(orientation, position, length, widthTop, widthBase)); }
 	void addLeaves(const Matrix4& orientation, const Point3Df& position) { m_leavesDrawableList.push_back(LeafDrawable(orientation, position)); }

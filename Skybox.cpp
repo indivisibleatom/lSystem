@@ -7,7 +7,7 @@
 
 Skybox::Skybox(const Camera& camera) : m_camera(camera)
 {
-	m_textureId = createTexture("C:\\Users\\msati3\\Desktop\\lSystem\\lSystem\\Debug\\skydome.bmp");
+	m_textureId = createTexture("C:\\Development\\openSource\\lSystem\\lSystem\\Debug\\skydome.bmp");
 	m_pQuadric = gluNewQuadric();
 	gluQuadricNormals(m_pQuadric, GLU_SMOOTH);
 	gluQuadricTexture(m_pQuadric, GL_TRUE);

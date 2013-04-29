@@ -6,7 +6,7 @@
 
 VoxelWorld::VoxelWorld(int worldSize, int voxelSize) : m_worldSize(worldSize), m_voxelSize(voxelSize), m_pWorldHasBlock(new bool[worldSize*worldSize*worldSize])
 {
-	m_groundTexture = createTexture("C:\\Users\\msati3\\Desktop\\lSystem\\lSystem\\Debug\\grass.bmp");
+	m_groundTexture = createTexture("C:\\Development\\openSource\\lSystem\\lSystem\\Debug\\grass.bmp");
 
 	for (int y = 0; y < m_worldSize; y++)
 	{

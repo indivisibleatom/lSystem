@@ -28,8 +28,9 @@ int main(int argc, char *argv[])
 	std::unique_ptr<VoxelWorld> pWorld(new VoxelWorld(10, 10));
 	VoxelWorld* pWorldRaw = pWorld.get(); //TODO msati3: Hack??
 	renderer.addDrawable(std::move(pWorld));
-
-	std::unique_ptr<LSystem> pSystem = LSystemBuilder::buildLSystem("C:\\Users\\msati3\\Desktop\\lSystem\\lSystem\\openLSystemDescription.txt", *pWorldRaw);
+	
+	std::unique_ptr<LSystem> pSystem = LSystemBuilder::buildLSystem("C:\\Development\\openSource\\lSystem\\lSystem\\openLSystemDescription.txt", *pWorldRaw);
+	//std::unique_ptr<LSystem> pSystem = LSystemBuilder::buildLSystem("C:\\Users\\msati3\\Desktop\\lSystem\\lSystem\\openLSystemDescription.txt", *pWorldRaw);
 	LSystemController systemController(std::move(pSystem), renderer);
 	//TODO msati3: Move this to a world class
 	
