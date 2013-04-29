@@ -3,6 +3,11 @@
 #include <sstream>
 #include "Token.h"
 
+
+//There are two types of tokens that may be encountered in parsing of L-Systems. Normal tokens (associated with non-expanded productions). The keys in this case are not yet associated with meaningful parameters.
+//The other type of tokens are Expanded tokens. These are created while applying grammar to extend L-System strings. These correctly associate keys with corresponding values.
+
+//=====================Token impls=======================
 const char* Token::createToken(const char* pCurrent)
 {
 	this->m_params.clear();
@@ -61,6 +66,30 @@ const char* Token::createToken(const char* pCurrent)
 	}
 	return pCurrent;
 }
+
+bool Token::getParamValueForKey(char key, __out float& value) const throw()
+{
+	std::map<char, float>::const_iterator it = m_params.find(key); 
+	if (it != m_params.end()) 
+	{
+		value = it->second;
+		return true;
+	}
+	return false;
+}
+
+bool Token::setParamValueForKey(char key, float value) throw()
+{
+	std::map<char, float>::iterator it = m_params.find(key); 
+	if (it != m_params.end()) 
+	{
+		it->second = value;
+		return true;
+	}
+	return false;
+}
+
+//===========Expanded Token overrides and impls=================
 
 std::string ExpandedToken::getStringForToken() const throw()
 {
@@ -150,30 +179,20 @@ const char* ExpandedToken::createToken(const char* pCurrent)
 	return pCurrent;
 }
 
-void ExpandedToken::createToken(const ExpandedToken& currentToken, const Token& tokenToUse)
+void ExpandedToken::createToken(const ExpandedToken& currentToken, const ExpandedToken* pAttachedToken, const Token& tokenToUse)
 {
 	this->m_params.clear();
 	m_alpha = tokenToUse.getChar();
+	const ExpandedToken& paramSupplyingToken = (pAttachedToken == NULL)? currentToken : *pAttachedToken;
 	for (std::map<char, float>::const_iterator paramIt = tokenToUse.cParamBegin(); paramIt != tokenToUse.cParamEnd(); paramIt++)
 	{
 		float boundValueForParam;
-		bool hasKey = currentToken.getParamValueForKey(paramIt->first, boundValueForParam);
+		bool hasKey = paramSupplyingToken.getParamValueForKey(paramIt->first, boundValueForParam);
 		assert(hasKey);
 
 		float expandedValue = paramIt->second * boundValueForParam;
 		m_params.insert(std::pair<char, float>(paramIt->first, expandedValue));
 	}
-}
-
-bool ExpandedToken::getParamValueForKey(char key, __out float& value) const throw()
-{
-	std::map<char, float>::const_iterator it = m_params.find(key); 
-	if (it != m_params.end()) 
-	{
-		value = it->second;
-		return true;
-	}
-	return false;
 }
 
 bool StringTokenizer::getNextToken(__out ExpandedToken& token) throw()
@@ -183,4 +202,5 @@ bool StringTokenizer::getNextToken(__out ExpandedToken& token) throw()
 		return false;
 	}
 	m_pCurPosition = token.createToken(m_pCurPosition);
+	return true;
 }

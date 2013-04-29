@@ -126,6 +126,7 @@ struct Vector4
     // ctors
     Vector4() : x(0), y(0), z(0), w(0) {};
     Vector4(float x, float y, float z, float w) : x(x), y(y), z(z), w(w) {};
+	Vector4(const Point3Df& pointFrom, const Point3Df& pointTo): x(pointTo.X() - pointFrom.X()), y(pointTo.Y() - pointFrom.Y()), z(pointTo.Z() - pointFrom.Z()), w(0) {}
 
     // utils functions
     void        set(float x, float y, float z, float w);

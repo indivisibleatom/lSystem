@@ -5,8 +5,12 @@
 
 class Skybox : public IDrawable
 {
+private:
+	const Camera& m_camera;
+	GLuint m_textureId;
+	GLUquadric* m_pQuadric;
 public:
-	Skybox();
+	Skybox(const Camera& camera);
 	void draw() const;
 };
 

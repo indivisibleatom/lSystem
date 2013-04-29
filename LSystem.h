@@ -2,6 +2,7 @@
 #define _LSYSTEM_H_
 
 #include "Token.h"
+class VoxelWorld;
 
 class ProductionLHS
 {
@@ -66,7 +67,7 @@ public:
 class LSystemBuilder
 {
 public:
-	static std::unique_ptr<LSystem> buildLSystem(std::string fileName);
+	static std::unique_ptr<LSystem> buildLSystem(std::string fileName, const VoxelWorld& world);
 };
 
 #endif//LSYSTEM_H_

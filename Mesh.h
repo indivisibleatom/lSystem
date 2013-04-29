@@ -25,7 +25,7 @@ private:
 public:
 	Mesh() {}
 	Mesh(Mesh&& other) : m_vertices(std::move(other.m_vertices)), m_corners(std::move(other.m_corners)) {}
-	~Mesh() override {}
+	~Mesh() {}
 
 	void draw() const;
 	int addVertex(Vertex<float> vertex);

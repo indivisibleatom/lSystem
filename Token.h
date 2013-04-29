@@ -21,6 +21,9 @@ public:
 	iterator paramEnd() { return m_params.end(); }
 	const_iterator cParamBegin() const { return m_params.cbegin(); }
 	const_iterator cParamEnd() const { return m_params.cend(); }
+	bool getParamValueForKey(char key, __out float& value) const throw();
+	bool setParamValueForKey(char key, float value) throw();
+	bool hasParam(char key) const throw() { float dummyVal; return getParamValueForKey(key, dummyVal); }
 };
 
 class ExpandedToken : public Token
@@ -29,8 +32,7 @@ public:
 	ExpandedToken() {}
 	~ExpandedToken() {}
 	const char* createToken(const char* ptr) override;
-	void createToken(const ExpandedToken& currentToken, const Token& tokenToUse);
-	bool getParamValueForKey(char key, __out float& value) const throw();
+	void createToken(const ExpandedToken& currentToken, const ExpandedToken* pAttachedToken, const Token& tokenToUse);
 	std::string getStringForToken() const throw();
 };
 

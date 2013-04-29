@@ -1,10 +1,12 @@
 #include "precomp.h"
 #include "LSystem.h"
+#include "EnvironInteractor.h"
 #include <iostream>
 #include <fstream>
 #include <iostream>
 #include <string>
 #include "utils.h"
+#include "VoxelWorld.h"
 
 namespace
 {
@@ -40,15 +42,28 @@ ProductionRHS::ProductionRHS(const std::string& rhs)
 void Production::applyTo(const ExpandedToken& currentToken, std::string& resultString) const throw()
 {
 	//TODO msati3: can add conditions here
+	std::unique_ptr<ExpandedToken> pAttachedToken = NULL;	
+	EnvironmentInteractor& environInteractor = EnvironmentInteractor::getEnvironmentInteractor();
 	for (ProductionRHS::const_iterator tokenIt = m_rhs.cbegin(); tokenIt != m_rhs.cend(); tokenIt++)
 	{
 		ExpandedToken substitutedToken;
-		substitutedToken.createToken(currentToken, *tokenIt);
-		resultString.append(substitutedToken.getStringForToken());
+		substitutedToken.createToken(currentToken, pAttachedToken.get(), *tokenIt);
+
+		if (substitutedToken.getChar() == '?') //This is a call to a query point
+		{
+			environInteractor.getEnvironParameters(substitutedToken, resultString);
+			pAttachedToken.reset(new ExpandedToken(substitutedToken));
+		}
+		else
+		{
+			resultString.append(substitutedToken.getStringForToken());
+			pAttachedToken.release();
+		}
 	}
+	assert(pAttachedToken == NULL);
 }
 
-std::unique_ptr<LSystem> LSystemBuilder::buildLSystem(std::string fileName)
+std::unique_ptr<LSystem> LSystemBuilder::buildLSystem(std::string fileName, const VoxelWorld& world)
 {
 	std::fstream lsystemFile;
 	lsystemFile.open(fileName, std::ios_base::in);
@@ -88,7 +103,7 @@ std::unique_ptr<LSystem> LSystemBuilder::buildLSystem(std::string fileName)
 			assert(productionValues.size() == 2);
 			
 			std::vector<std::string> rhsSideProductionValues;
-			split(productionValues[1], '&', rhsSideProductionValues);
+			split(productionValues[1], ':', rhsSideProductionValues);
 			if (rhsSideProductionValues.size() == 1)
 			{
 				rhsSideProductionValues.push_back("1.00");
@@ -102,6 +117,7 @@ std::unique_ptr<LSystem> LSystemBuilder::buildLSystem(std::string fileName)
 	}
 
 	std::unique_ptr<LSystem> pSystem(new LSystem(numDerivations, std::move(pAxiom), productions));
+	EnvironmentInteractor::createEnvironmentInteractor(world);
 	return pSystem;
 }
 

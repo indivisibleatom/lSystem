@@ -4,8 +4,11 @@
 #include "Renderer.h"
 #include "Drawable.h"
 
-Renderer::Renderer(int screenX, int screenY, int bpp) : m_screenSize(screenX, screenY), m_bpp(bpp), m_camera(Vector3(0,0,-100), Vector3(0,0,0), Vector3(0,1,0))
+Renderer::Renderer(int screenX, int screenY, int bpp) : m_screenSize(screenX, screenY), m_bpp(bpp), m_camera(Vector3(0,10,-100), Vector3(0,0,0), Vector3(0,1,0))
 {
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+	glDisable(GL_BLEND);
 }
 
 bool Renderer::init()
@@ -26,7 +29,7 @@ void Renderer::flip()
 bool Renderer::draw()
 {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(60, 800/600, 1, 1000);

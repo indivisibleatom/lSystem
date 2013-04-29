@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="lSystem">
+</Property><Property Name="Solution File" Value="C:\Users\msati3\Desktop\lSystem\lSystem\lSystem.sln">
+</Property><Property Name="User Options File" Value="C:\Users\msati3\Desktop\lSystem\lSystem\lSystem.suo">
+</Property><Property Name="Date" Value="Wednesday, April 24, 2013">
+</Property><Property Name="Time" Value="18:50 PM">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="lSystem.sln" Description="File successfully backed up as C:\Users\msati3\Desktop\lSystem\lSystem\lSystem.sln.old">
+</Event><Event ErrorLevel="0" Project="" Source="lSystem.suo" Description="File successfully backed up as C:\Users\msati3\Desktop\lSystem\lSystem\lSystem.suo.old">
+</Event><Event ErrorLevel="3" Project="lSystem" Source="lSystem.vcxproj" Description="No Conversion Required">
+</Event><Event ErrorLevel="3" Project="mathHelpers" Source="..\mathHelpers\mathHelpers.vcxproj" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="" Source="lSystem.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="lSystem.sln" Description="Converted">
+</Event></UpgradeLog>

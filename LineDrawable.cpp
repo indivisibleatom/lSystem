@@ -9,9 +9,9 @@ void LineDrawable::addPoints(const Point3Df& one, const Point3Df& other)
 
 void LineDrawable::draw() const
 {
+	glColor3f(255,0,0);
 	glPushMatrix();
 	//Rotate about x axis by 90 degrees to make stuff visible
-	glRotatef(-90, 1, 0, 0);
 
 	glBegin(GL_LINES);
 	for (std::vector<std::tuple<Point3Df, Point3Df>>::const_iterator lineEndpoints = m_lines.cbegin(); lineEndpoints != m_lines.cend(); lineEndpoints++)
@@ -21,4 +21,5 @@ void LineDrawable::draw() const
 	}
 	glEnd();
 	glPopMatrix();
+	glColor3f(255,255,255);
 }
