@@ -13,6 +13,7 @@ GLuint createTexture(const std::string& fileName);
 
 //TODO msati3: Remove Renderer fetching hack
 Renderer& getRenderer();
+void solidCube(GLdouble size);
 
 class DrawableVector : public IDrawable
 {

@@ -6,7 +6,7 @@
 #include "LSystemController.h"
 #include "Renderer.h"
 #include "VoxelWorld.h"
-#include "Skybox.h"
+#include "EnvironmentAssets.h"
 
 Renderer* pRenderer;
 
@@ -24,13 +24,13 @@ int main(int argc, char *argv[])
 	renderer.init();
 
 	std::unique_ptr<Skybox> pSkyDome(new Skybox(renderer.getCamera()));
+	Skybox* pEnvironmentAssets = pSkyDome.get(); //TODO msati3: Hack??
 	renderer.addDrawable(std::move(pSkyDome));
-	std::unique_ptr<VoxelWorld> pWorld(new VoxelWorld(10, 10));
+	std::unique_ptr<VoxelWorld> pWorld(new VoxelWorld(20, 10));
 	VoxelWorld* pWorldRaw = pWorld.get(); //TODO msati3: Hack??
 	renderer.addDrawable(std::move(pWorld));
-	
-	std::unique_ptr<LSystem> pSystem = LSystemBuilder::buildLSystem("C:\\Development\\openSource\\lSystem\\lSystem\\openLSystemDescription.txt", *pWorldRaw);
-	//std::unique_ptr<LSystem> pSystem = LSystemBuilder::buildLSystem("C:\\Users\\msati3\\Desktop\\lSystem\\lSystem\\openLSystemDescription.txt", *pWorldRaw);
+
+	std::unique_ptr<LSystem> pSystem = LSystemBuilder::buildLSystem("C:\\Development\\openSource\\lSystemOld\\lSystem\\openLSystemDescription2.txt", *pWorldRaw);
 	LSystemController systemController(std::move(pSystem), renderer);
 	//TODO msati3: Move this to a world class
 	
@@ -88,6 +88,14 @@ int main(int argc, char *argv[])
 						else if (keysym.sym == 'u')
 						{
 							systemController.onUpdate();
+						}
+						else if (keysym.sym == '1')
+						{
+							pWorldRaw->toggleShowGrid();
+						}
+						else if (keysym.sym == '2')
+						{
+							pEnvironmentAssets->toggleShow();
 						}
 					}
 					break;

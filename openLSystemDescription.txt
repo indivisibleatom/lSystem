@@ -1,6 +1,8 @@
-numDerivations = 5
+numDerivations = 6
 Axiom
-A(l:15,a:45,w:15,u:15)
+A(l:12,a:45,b:35,w:8,u:8)
 Productions
-A(l,a,w,u)>?(l,a,w,u)F(2l,w,0.8u)?(l,a,w,u)B(0.5l,a,0.8w,0.8u):1
-B(l,a,w,u)>?(l,a,w,u)F(0.6l,w,0.8u)[-?(l,a,w,u)F(0.9l,0.5w,0.4u)^(a)?(l,a,w,u)B(0.8l,0.5a,0.4w,0.4u)]?(l,a,w,u)F(0.7l,0.8w,0.64u)[+?(l,a,w,u)F(0.9l,0.5w,0.4u)&(a)?(l,a,w,u)B(0.8l,0.5a,0.4w,0.4u)]:1
+A(l,a,b,w,u)>?(l,a,w,u)F(2l,w,0.8u)?(l,a,b,w,u)B(0.9l,a,b,0.8w,0.8u):1
+B(l,a,b,w,u)>[^(b)?(b)^(b)?(l,a,w,u)F(0.9l,0.8w,0.64u)B(0.8l,a,b,0.64w,0.64u)]/(2a)?(a)/(a)?[^(b)?(b)^(b)?(l,a,w,u)F(0.9l,0.8w,0.64u)B(0.8l,a,b,0.64w,0.64u)]/(3a)?(a)/(a)?[^(b)?(b)^(b)?(l,a,w,u)F(0.9l,0.8w,0.64u)B(0.8l,a,b,0.64w,0.64u)]:0.50
+B(l,a,b,w,u)>[^(b)?(b)^(b)?(l,a,w,u)F(0.9l,0.8w,0.64u)B(0.8l,a,b,0.64w,0.64u)]/(5a)?(a)/(a)?[^(b)?(b)^(b)?(l,a,w,u)F(0.9l,0.8w,0.64u)B(0.8l,a,b,0.64w,0.64u)]:0.25
+B(l,a,b,w,u)>[^(b)?(b)^(b)?(l,a,w,u)F(0.9l,0.8w,0.64u)B(0.8l,a,b,0.64w,0.64u)]/(3a)?(a)/(a)?[^(b)?(b)^(b)?(l,a,w,u)F(0.9l,0.8w,0.64u)B(0.8l,a,b,0.64w,0.64u)]:0.25

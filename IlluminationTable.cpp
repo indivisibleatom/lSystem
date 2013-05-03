@@ -54,7 +54,8 @@ IlluminationResult IlluminationTable::findMaxIllumination(const Vector3& heading
 			{
 				Vector4 vectorToIlluminationLocation = m_illuminationTable[i*m_size + j].getLocation();
 				Vector3 vectorToIlluminationLocation3(vectorToIlluminationLocation.x, vectorToIlluminationLocation.y, vectorToIlluminationLocation.z);
-				float angle = vectorToIlluminationLocation3.angle(headingOriginal);
+				//float angle = vectorToIlluminationLocation3.angle(headingOriginal);
+				float angle = vectorToIlluminationLocation3.angle(Vector3(0,1,0));
 				if (abs(angle) < minAngle)
 				{
 					maxIllumination = illumination;

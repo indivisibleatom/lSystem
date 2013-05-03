@@ -9,8 +9,9 @@ class VoxelWorld : public IDrawable
 private:
 	int m_worldSize;
 	int m_voxelSize;
+	int m_fShowMode;
 	std::unique_ptr<bool[]> m_pWorldHasBlock;
-	GLuint m_groundTexture;
+	GLuint m_brickTexture;
 
 	std::tuple<int, int, int> getGridFor(const Point3Df& point) const throw();
 	Point3Df getNextGridCoordinates(int axis, const std::tuple<int, int, int>& currentGrid, const std::tuple<int, int, int>& nextGrid) const throw();
@@ -22,6 +23,8 @@ public:
 	void addWorldBlock(const Point3Df& pos);
 	void removeWorldBlock(const Point3Df& pos);
 	void addWall(const Point3Df& pos);
+	void addPillar(const Point3Df& position);
+	void toggleShowGrid() throw() { m_fShowMode = (m_fShowMode+1)%3; }
 	void draw() const override;
 	std::tuple<int,int,int> getGridSizes() { return std::tuple<int, int, int>(m_voxelSize, m_voxelSize, m_voxelSize); }
 	std::tuple<int, int, int> getGridForRayIntersection(const Vector4& ray, const Point3Df& origin) const throw();

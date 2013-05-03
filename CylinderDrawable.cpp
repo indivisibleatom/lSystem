@@ -11,10 +11,10 @@ void CylinderDrawableList::draw() const throw()
 	{ 
 		iter->draw(); 
 	} 
-	/*for (std::vector<LeafDrawable>::const_iterator iter = m_leavesDrawableList.cbegin(); iter != m_leavesDrawableList.cend(); iter++)
+	for (std::vector<LeafDrawable>::const_iterator iter = m_leavesDrawableList.cbegin(); iter != m_leavesDrawableList.cend(); iter++)
 	{ 
 		iter->draw(); 
-	} */
+	}
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDisable(GL_TEXTURE_2D);
 }
@@ -47,6 +47,7 @@ void CylinderDrawable::draw() const throw()
 	glutSolidSphere(m_widthTop/2, 10, 10);
 	glTranslatef(0, -m_length, 0);
 	glRotatef(-90,1,0,0);
+	//gluQuadricDrawStyle(m_pQuadric, GLU_LINE);
 	gluQuadricDrawStyle(m_pQuadric, GLU_FILL); //this makes it solid
 	gluCylinder(m_pQuadric, m_widthBase/2, m_widthTop/2, m_length, 10, 10);
 	glPopMatrix();

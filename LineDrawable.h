@@ -9,6 +9,7 @@ private:
 	std::vector<std::tuple<Point3Df, Point3Df>> m_lines;
 
 public:
+	void onNewInterpretationStart() throw() { m_lines.clear(); }
 	void addPoints(const Point3Df& one, const Point3Df& other);
 	void draw() const override;
 };

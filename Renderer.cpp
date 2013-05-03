@@ -6,9 +6,6 @@
 
 Renderer::Renderer(int screenX, int screenY, int bpp) : m_screenSize(screenX, screenY), m_bpp(bpp), m_camera(Vector3(0,10,-100), Vector3(0,0,0), Vector3(0,1,0))
 {
-	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LESS);
-	glDisable(GL_BLEND);
 }
 
 bool Renderer::init()
@@ -16,6 +13,11 @@ bool Renderer::init()
 	if (SDL_Init(SDL_INIT_VIDEO) == 0)
 	{
 		m_pScreen = SDL_SetVideoMode(std::get<0>(m_screenSize), std::get<1>(m_screenSize), m_bpp, SDL_HWSURFACE | SDL_OPENGL);	
+	    SDL_GL_SetAttribute( SDL_GL_DEPTH_SIZE, 16 );
+	    SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LESS);
+		glDisable(GL_BLEND);
 		return true;
 	}
 	return false;
@@ -55,9 +57,27 @@ bool Renderer::draw()
 	return true;
 }
 
-void Renderer::addDrawable(std::unique_ptr<IDrawable> m_pDrawable)
+void Renderer::addDrawable(std::unique_ptr<IDrawable> pDrawable)
 {
-	m_drawableList.push_back(std::move(m_pDrawable));
+	m_drawableList.push_back(std::move(pDrawable));
+}
+
+void Renderer::removeDrawable(IDrawable* pDrawable)
+{
+	if (pDrawable == NULL)
+		return;
+	
+	for(std::list<std::unique_ptr<IDrawable>>::iterator i = m_drawableList.begin(); i != m_drawableList.end();)
+	{
+		if ((*i).get() == pDrawable)
+		{
+			i = m_drawableList.erase(i);
+		}
+		else
+		{
+			i++;
+		}
+	}
 }
 
 /*void Renderer::applyTransFormation(const Matrix4& matrix)

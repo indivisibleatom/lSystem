@@ -7,7 +7,7 @@ void Turtle::reset()
 			          0,1,0,0,
 			          0,0,1,0,
 			          0,0,0,1);
-	m_position.set(50,0,50);
+	m_position.set(100,0,100);
 }
 
 void Turtle::translate(float amount) throw()
@@ -17,11 +17,15 @@ void Turtle::translate(float amount) throw()
 
 void Turtle::translate(float amount, const Vector3& direction) throw()
 {
+	//Vector3 translation = Vector3(0, amount, 0);
+	//m_position += m_orientation * translation;
 	Vector3 directionNormal = direction;
 	directionNormal.normalize();
 	Vector3 componentWiseTranslation(amount * directionNormal.dot(left()), amount * directionNormal.dot(heading()), amount * directionNormal.dot(up()));
 
-	m_position += m_orientation * componentWiseTranslation;
+	//Matrix4 orientation = m_orientation;
+	Vector3 vectorWorld = m_orientation * componentWiseTranslation;
+	m_position += vectorWorld;
 }
 
 void Turtle::changeHeading(float angle) throw()
@@ -33,7 +37,7 @@ void Turtle::changeHeading(float angle) throw()
 				    sinAngle, cosAngle, 0, 0,
 				    0, 0, 1, 0,
 				    0, 0, 0, 1);
-	m_orientation = headingRot * m_orientation;
+	m_orientation = m_orientation * headingRot;
 }
 
 void Turtle::changePitch(float angle) throw()
@@ -45,7 +49,7 @@ void Turtle::changePitch(float angle) throw()
 				     0, cosAngle, -sinAngle, 0,
 				     0, sinAngle, cosAngle, 0,
 				     0, 0, 0, 1);
-	m_orientation = pitchRot * m_orientation;
+	m_orientation = m_orientation * pitchRot;
 }
 
 void Turtle::changeRoll(float angle) throw()
@@ -57,5 +61,5 @@ void Turtle::changeRoll(float angle) throw()
 				       0, 1, 0, 0,
 				      -sinAngle, 0, cosAngle, 0,
 				       0, 0, 0, 1);
-	m_orientation = rollRot * m_orientation;
+	m_orientation = m_orientation * rollRot;
 }

@@ -65,12 +65,15 @@ GLuint createTexture(const std::string& fileName)
 		glBindTexture( GL_TEXTURE_2D, texture );
  
 		// Set the texture's stretching properties
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+		//glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+		//glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+		glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
+		glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR );
  
 		// Edit the texture object's image data using the information SDL_Surface gives us
-		glTexImage2D( GL_TEXTURE_2D, 0, nOfColors, surface->w, surface->h, 0,
-						  texture_format, GL_UNSIGNED_BYTE, surface->pixels );
+		gluBuild2DMipmaps( GL_TEXTURE_2D, 3, surface->w, surface->h, texture_format, GL_UNSIGNED_BYTE, surface->pixels );
+		//glTexImage2D( GL_TEXTURE_2D, 0, nOfColors, surface->w, surface->h, 0,
+		//				  texture_format, GL_UNSIGNED_BYTE, surface->pixels );
 	} 
 	else
 	{
@@ -97,4 +100,55 @@ void DrawableVector::draw() const
 		glVertex3f(pointFinal.X(), pointFinal.Y(), pointFinal.Z());
 	glEnd();
 	glColor3f(255,255,255);
+}
+
+static void
+drawBox(GLfloat size, GLenum type)
+{
+  static GLfloat n[6][3] =
+  {
+    {-1.0, 0.0, 0.0},
+    {0.0, 1.0, 0.0},
+    {1.0, 0.0, 0.0},
+    {0.0, -1.0, 0.0},
+    {0.0, 0.0, 1.0},
+    {0.0, 0.0, -1.0}
+  };
+  static GLint faces[6][4] =
+  {
+    {0, 1, 2, 3},
+    {3, 2, 6, 7},
+    {7, 6, 5, 4},
+    {4, 5, 1, 0},
+    {5, 6, 2, 1},
+    {7, 4, 0, 3}
+  };
+  GLfloat v[8][3];
+  GLint i;
+
+  v[0][0] = v[1][0] = v[2][0] = v[3][0] = -size / 2;
+  v[4][0] = v[5][0] = v[6][0] = v[7][0] = size / 2;
+  v[0][1] = v[1][1] = v[4][1] = v[5][1] = -size / 2;
+  v[2][1] = v[3][1] = v[6][1] = v[7][1] = size / 2;
+  v[0][2] = v[3][2] = v[4][2] = v[7][2] = -size / 2;
+  v[1][2] = v[2][2] = v[5][2] = v[6][2] = size / 2;
+
+  for (i = 5; i >= 0; i--) {
+    glBegin(type);
+    glNormal3fv(&n[i][0]);
+	glTexCoord2f(0,0);
+    glVertex3fv(&v[faces[i][0]][0]);
+	glTexCoord2f(1,0);
+    glVertex3fv(&v[faces[i][1]][0]);
+	glTexCoord2f(1,1);
+    glVertex3fv(&v[faces[i][2]][0]);
+	glTexCoord2f(0,1);
+    glVertex3fv(&v[faces[i][3]][0]);
+    glEnd();
+  }
+}
+
+void solidCube(GLdouble size)
+{
+  drawBox(size, GL_QUADS);
 }

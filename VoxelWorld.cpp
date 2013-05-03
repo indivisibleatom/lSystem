@@ -4,10 +4,9 @@
 #include "VoxelWorld.h"
 #include "utils.h"
 
-VoxelWorld::VoxelWorld(int worldSize, int voxelSize) : m_worldSize(worldSize), m_voxelSize(voxelSize), m_pWorldHasBlock(new bool[worldSize*worldSize*worldSize])
+VoxelWorld::VoxelWorld(int worldSize, int voxelSize) : m_worldSize(worldSize), m_voxelSize(voxelSize), m_pWorldHasBlock(new bool[worldSize*worldSize*worldSize]), m_fShowMode(0)
 {
-	m_groundTexture = createTexture("C:\\Development\\openSource\\lSystem\\lSystem\\Debug\\grass.bmp");
-
+	m_brickTexture = createTexture("C:\\Development\\openSource\\lSystemOld\\lSystem\\brick.bmp");
 	for (int y = 0; y < m_worldSize; y++)
 	{
 		for (int z = 0; z < m_worldSize; z++)
@@ -23,42 +22,62 @@ VoxelWorld::VoxelWorld(int worldSize, int voxelSize) : m_worldSize(worldSize), m
 void VoxelWorld::draw() const
 {
 	glPushMatrix();
-	//TODO msati3: Replace this by a height map?
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, m_groundTexture);
-	glColor3f(0,255,0);
-	glBegin(GL_QUADS);
-		glTexCoord2d(0,0); glVertex3f(-1000,0,1000);
-		glTexCoord2d(1,0); glVertex3f(1000,0,1000);
-	    glTexCoord2d(1,1); glVertex3f(1000,0,-1000);
-		glTexCoord2d(0,1); glVertex3f(-1000,0,-1000);
-	glEnd();
-	
-	glBindTexture(GL_TEXTURE_2D, 0);
-	glDisable(GL_TEXTURE_2D);
 	glColor3f(255,255,255);
-	glDisable(GL_CULL_FACE);
 
-	/*for (int y = 0; y < m_worldSize; y++)
+	if (m_fShowMode == 1)
 	{
-		for (int z = 0; z < m_worldSize; z++)
+		for (int y = 0; y < m_worldSize; y++)
 		{
-			for (int x = 0; x < m_worldSize; x++)
+			for (int z = 0; z < m_worldSize; z++)
 			{
-				glTranslatef(x*m_voxelSize + m_voxelSize/2, y*m_voxelSize + m_voxelSize/2, z*m_voxelSize + m_voxelSize/2);
-				if (!m_pWorldHasBlock[y * m_worldSize * m_worldSize + z * m_worldSize + x])
+				for (int x = 0; x < m_worldSize; x++)
 				{
-					glutWireCube(m_voxelSize);
+					glTranslatef(x*m_voxelSize + m_voxelSize/2, y*m_voxelSize + m_voxelSize/2, z*m_voxelSize + m_voxelSize/2);
+					if (!m_pWorldHasBlock[y * m_worldSize * m_worldSize + z * m_worldSize + x])
+					{
+						glutWireCube(m_voxelSize);
+					}
+					else
+					{
+						glPolygonMode(GL_FRONT, GL_FILL);
+						solidCube(m_voxelSize);
+					}
+					glTranslatef(-x*m_voxelSize -m_voxelSize/2, -y*m_voxelSize -m_voxelSize/2, -z*m_voxelSize -m_voxelSize/2);
 				}
-				else
-				{
-					glPolygonMode(GL_FRONT, GL_FILL);
-					glutSolidCube(m_voxelSize);
-				}
-				glTranslatef(-x*m_voxelSize -m_voxelSize/2, -y*m_voxelSize -m_voxelSize/2, -z*m_voxelSize -m_voxelSize/2);
 			}
 		}
-	}*/
+	}
+	else if (m_fShowMode == 2)
+	{
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, m_brickTexture);
+
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_BACK);
+
+		for (int y = 0; y < m_worldSize; y++)
+		{
+			for (int z = 0; z < m_worldSize; z++)
+			{
+				for (int x = 0; x < m_worldSize; x++)
+				{
+					glTranslatef(x*m_voxelSize + m_voxelSize/2, y*m_voxelSize + m_voxelSize/2, z*m_voxelSize + m_voxelSize/2);
+					if (m_pWorldHasBlock[y * m_worldSize * m_worldSize + z * m_worldSize + x])
+					{
+						glPolygonMode(GL_FRONT, GL_FILL);
+						solidCube(m_voxelSize);
+					}
+					glTranslatef(-x*m_voxelSize -m_voxelSize/2, -y*m_voxelSize -m_voxelSize/2, -z*m_voxelSize -m_voxelSize/2);
+				}
+			}
+		}
+
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glDisable(GL_TEXTURE_2D);
+		glCullFace(0);
+		glDisable(GL_CULL_FACE);
+	}
+
 	glPopMatrix();
 }
 
@@ -81,6 +100,24 @@ void VoxelWorld::removeWorldBlock(const Point3Df& position)
 }
 
 void VoxelWorld::addWall(const Point3Df& position)
+{
+	std::tuple<int, int, int> grid = getGridFor(position);
+	int x = std::get<0>(grid);
+	int y = std::get<1>(grid);
+	int z = std::get<2>(grid);
+	if (isValidGrid(grid))
+	{
+		for (int i = 0; i < m_worldSize; i++)
+		{
+			for (int j = 0; j < m_worldSize; j++)
+			{
+				m_pWorldHasBlock[i * m_worldSize * m_worldSize + j * m_worldSize + x] = true;
+			}
+		}
+	}
+}
+
+void VoxelWorld::addPillar(const Point3Df& position)
 {
 	std::tuple<int, int, int> grid = getGridFor(position);
 	int x = std::get<0>(grid);
@@ -193,13 +230,13 @@ std::tuple<int, int, int> VoxelWorld::getGridForRayIntersection(const Vector4& r
 	if (alongY != 0)
 	{
 		tDeltaY = m_voxelSize / abs(alongY);
-		tMaxY = (nextXCoordinates.Y() - origin.Y())/ alongX;
+		tMaxY = (nextYCoordinates.Y() - origin.Y())/ alongY;
 	}
 
 	if (alongZ != 0)
 	{
 		tDeltaZ = m_voxelSize / abs(alongZ);
-		tMaxZ = (nextXCoordinates.Z() - origin.Z())/ alongX;
+		tMaxZ = (nextZCoordinates.Z() - origin.Z())/ alongZ;
 	}
 
 	do

@@ -21,7 +21,8 @@ public:
 	bool init();
 	bool draw();
 	void flip();
-	void addDrawable(std::unique_ptr<IDrawable> m_pDrawable);
+	void addDrawable(std::unique_ptr<IDrawable> pDrawable);
+	void removeDrawable(IDrawable* pDrawable);
 	Camera& getCamera() throw() { return m_camera; }
     //void applyTransFormation(const Matrix4& matrix)
 };

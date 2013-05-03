@@ -3,7 +3,4 @@
 [Bb]in
 *.sdf
 *.opensdf
-_UpgradeReport_Files/
-*.old
-*.*~
 ipch/

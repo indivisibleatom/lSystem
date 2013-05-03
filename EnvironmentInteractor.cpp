@@ -25,17 +25,24 @@ void EnvironmentInteractor::getEnvironParameters(ExpandedToken& tokenToWriteTo, 
 	Vector4 maxIlluminationGridLocationGlobal = orientation * maxIlluminationGridLocationLocal;
 	Vector3 maxIlluminationGridLocationGlobal3(maxIlluminationGridLocationGlobal.x, maxIlluminationGridLocationGlobal.y, maxIlluminationGridLocationGlobal.z);
 	
-	if (tokenToWriteTo.hasParam('a'))
+	if (tokenToWriteTo.hasParam('a') && !tokenToWriteTo.hasParam('l'))
 	{		
 		float angle;
 		tokenToWriteTo.getParamValueForKey('a', angle);
 		float angleDiff = 180*maxIlluminationGridLocationGlobal3.angle(m_pLSystemInterpreter->getHeading())/PI;
-		tokenToWriteTo.setParamValueForKey('a', angle+angleDiff);
+		tokenToWriteTo.setParamValueForKey('a', angleDiff);
+	}
+	if (tokenToWriteTo.hasParam('b') && !tokenToWriteTo.hasParam('l'))
+	{
+		float angle;
+		tokenToWriteTo.getParamValueForKey('b', angle);
+		float angleDiff = 180*maxIlluminationGridLocationGlobal3.angle(m_pLSystemInterpreter->getHeading())/PI;
+		tokenToWriteTo.setParamValueForKey('b', angleDiff);
 	}
 	if (tokenToWriteTo.hasParam('l'))
 	{
 		float length;
 		tokenToWriteTo.getParamValueForKey('l', length);
-		tokenToWriteTo.setParamValueForKey('l', length/2 + length/2 * result.illumination());
+		tokenToWriteTo.setParamValueForKey('l', length * result.illumination());
 	}
 }

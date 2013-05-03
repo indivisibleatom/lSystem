@@ -22,6 +22,7 @@ public:
 	const_iterator cParamBegin() const { return m_params.cbegin(); }
 	const_iterator cParamEnd() const { return m_params.cend(); }
 	bool getParamValueForKey(char key, __out float& value) const throw();
+	bool getParamValue(__out float& value) const throw();
 	bool setParamValueForKey(char key, float value) throw();
 	bool hasParam(char key) const throw() { float dummyVal; return getParamValueForKey(key, dummyVal); }
 };

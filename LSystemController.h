@@ -10,6 +10,7 @@ class Renderer;
 class LSystemController
 {
 private:
+	IDrawable* m_pCurrentInterpretation;
 	std::unique_ptr<LSystem> m_pSystem;
 	std::unique_ptr<LSystemInterpreter> m_pInterpreter;
 	std::unique_ptr<Mesh> m_pMesh;

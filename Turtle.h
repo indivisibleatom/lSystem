@@ -16,7 +16,7 @@ public:
 	Turtle() : m_orientation(1,0,0,0,
 					         0,1,0,0,
 					         0,0,1,0,
-					         0,0,0,1), m_position(50,0,50) {}
+					         0,0,0,1), m_position(100,0,100) {reset();}
 
 	void reset();
 	void translate(float amount) throw();

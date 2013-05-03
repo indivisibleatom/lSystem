@@ -78,6 +78,17 @@ bool Token::getParamValueForKey(char key, __out float& value) const throw()
 	return false;
 }
 
+bool Token::getParamValue(__out float& value) const throw()
+{
+	if (m_params.size() != 0)
+	{
+		assert(m_params.size() == 1);
+		value = (m_params.begin())->second;
+		return true;
+	}
+	return false;
+}
+
 bool Token::setParamValueForKey(char key, float value) throw()
 {
 	std::map<char, float>::iterator it = m_params.find(key); 
